@@ -1,10 +1,11 @@
 {
     "name": "john-peterson-g17/jwt-authentication",
-    "description": "A framework agnostic php implementation of JWT authentication",
+    "description": "A framework agnostic php implementation of JWT authentication built on top of the firebase/php-jwt package",
     "type": "library",
     "autoload": {
         "psr-4": {
-            "JohnPetersonG17\\JwtAuthentication\\": "src/"
+            "JohnPetersonG17\\JwtAuthentication\\": "src/",
+            "JohnPetersonG17\\JwtAuthentication\\Tests\\": "tests/"
         }
     },
     "authors": [
@@ -13,5 +14,11 @@
             "email": "peterson.glock17@gmail.com"
         }
     ],
-    "require": {}
+    "require-dev": {
+        "phpunit/phpunit": "^10.5"
+    },
+    "require": {
+        "firebase/php-jwt": "^6.10",
+        "ramsey/uuid": "^4.7"
+    }
 }
