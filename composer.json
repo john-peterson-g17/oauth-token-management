@@ -1,0 +1,17 @@
+{
+    "name": "john-peterson-g17/jwt-authentication",
+    "description": "A framework agnostic php implementation of JWT authentication",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "JohnPetersonG17\\JwtAuthentication\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "John Peterson",
+            "email": "peterson.glock17@gmail.com"
+        }
+    ],
+    "require": {}
+}
