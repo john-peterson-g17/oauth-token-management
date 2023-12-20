@@ -66,6 +66,7 @@ class Token
         return (array) JWT::decode($this->encodedPayload, new Key($this->key, $this->hashingAlgorithm->value));
     }
 
+    // TODO: Implement this
     // public function toArray(): array
     // {
     //     return  [
@@ -74,11 +75,4 @@ class Token
     //         'encoded_jwt' => $this->encodedJwt,
     //     ];
     // }
-
-    // public function expires(): DateTimeInterface
-    // {
-    //     return $this->expires;
-    // }
-
-    // public function type(): TokenType;
 }

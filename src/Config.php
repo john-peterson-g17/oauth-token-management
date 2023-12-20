@@ -10,5 +10,6 @@ class Config {
         public readonly int $refreshTokenExpiration = 86400, // Default 1 day
         public readonly HashingAlgorithm $hashingAlgorithm = HashingAlgorithm::HS256,
         // TODO: Support other hashing algorithms
+        // TODO: Add support for token persistence to redis and possibly other data stores
     ) {}
 }
