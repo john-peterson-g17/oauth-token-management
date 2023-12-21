@@ -2,8 +2,7 @@
 
 namespace JohnPetersonG17\JwtAuthentication;
 
-enum TokenType
+class NotFoundException extends \Exception
 {
-    case ACCESS;
-    case REFRESH;
+
 }

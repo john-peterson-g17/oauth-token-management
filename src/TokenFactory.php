@@ -5,6 +5,7 @@ namespace JohnPetersonG17\JwtAuthentication;
 use JohnPetersonG17\JwtAuthentication\Config;
 use Ramsey\Uuid\Uuid;
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 use DateTime;
 use DateInterval;
 use DateTimeImmutable;
@@ -28,6 +29,13 @@ class TokenFactory
     public function setConfig(Config $config): void
     {
         $this->config = $config;
+    }
+
+    public function fromValue(string $value): Token
+    {
+        $decodedToken = JWT::decode($value, new Key($this->config->key, $this->config->hashingAlgorithm->value));
+
+        
     }
 
     public function make(mixed $userId, TokenType $type): Token
@@ -61,10 +69,10 @@ class TokenFactory
         $this->createdAt = new DateTimeImmutable('now', new DateTimeZone(DateTimeZone::UTC));
     }
 
-    private function calculateexpiresAt(): void
+    private function calculateExpiresAt(): void
     {
         $interval = null;
-        if ($this->type == TokenType::ACCESS_TOKEN) {
+        if ($this->type == TokenType::ACCESS) {
             $interval = DateInterval::createFromDateString($this->config->accessTokenExpiration . ' seconds');
         } else { // Refresh Token
             $interval = DateInterval::createFromDateString($this->config->refreshTokenExpiration . ' seconds');

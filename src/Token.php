@@ -2,38 +2,26 @@
 
 namespace JohnPetersonG17\JwtAuthentication;
 
-use Firebase\JWT\Key;
-use Firebase\JWT\JWT;
 use DateTimeInterface;
 
 class Token
 {
-    private mixed $userId;
     private TokenType $type;
     private DateTimeInterface $createdAt;
     private DateTimeInterface $expiresAt;
-    private string $encodedPayload;
-    private string $key;
-    private HashingAlgorithm $hashingAlgorithm;
+    private string $value; // The encoded payload of the token
 
     public function __construct(
-        mixed $userId,
         TokenType $type,
         DateTimeInterface $createdAt,
         DateTimeInterface $expiresAt,
-        string $encodedPayload,
-        string $key,
-        HashingAlgorithm $hashingAlgorithm = HashingAlgorithm::HS256
-        // TODO: Support other hashing algorithms
+        string $value,
     )
     {
-        $this->userId = $userId;
         $this->type = $type;
         $this->createdAt = $createdAt;
         $this->expiresAt = $expiresAt;
-        $this->encodedPayload = $encodedPayload;
-        $this->key = $key;
-        $this->hashingAlgorithm = $hashingAlgorithm;
+        $this->value = $value;
     }
 
     public function isExpired(): bool
@@ -56,23 +44,23 @@ class Token
         return $this->createdAt;
     }
 
-    public function userId(): mixed
+    public function value(): string
     {
-        return $this->userId;
+        return $this->value;
     }
 
-    public function decodePayload(): array
+    public function toArray(): array
     {
-        return (array) JWT::decode($this->encodedPayload, new Key($this->key, $this->hashingAlgorithm->value));
+        return  [
+            'type' => $this->type->value,
+            'expires_at' => $this->expiresAt->getTimestamp(),
+            'created_at' => $this->createdAt->getTimestamp(),
+            'value' => $this->value,
+        ];
     }
 
-    // TODO: Implement this
-    // public function toArray(): array
-    // {
-    //     return  [
-    //         'expires' => $this->expires->timestamp,
-    //         'created_at' => $this->createdAt->timestamp,
-    //         'encoded_jwt' => $this->encodedJwt,
-    //     ];
-    // }
+    public function _toString(): string
+    {
+        return json_encode($this->toArray());
+    }
 }

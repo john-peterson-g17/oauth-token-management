@@ -19,6 +19,7 @@
     },
     "require": {
         "firebase/php-jwt": "^6.10",
-        "ramsey/uuid": "^4.7"
+        "ramsey/uuid": "^4.7",
+        "predis/predis": "^2.2"
     }
 }
