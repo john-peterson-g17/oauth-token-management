@@ -1,4 +1,5 @@
-.gitattributes export-ignore
-.gitignore export-ignore
-docker-compose.yaml export-ignore
-./tests export-ignore
+.gitattributes          export-ignore
+.gitignore              export-ignore
+docker-compose.yaml     export-ignore
+./tests                 export-ignore
+CODEOWNERS.md           export-ignore
