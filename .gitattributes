@@ -2,4 +2,5 @@
 .gitignore              export-ignore
 docker-compose.yaml     export-ignore
 ./tests                 export-ignore
-CODEOWNERS.md           export-ignore
+CODEOWNERS              export-ignore
+phpunit.xml             export-ignore
