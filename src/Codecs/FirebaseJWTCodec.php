@@ -3,7 +3,7 @@
 namespace JohnPetersonG17\JwtAuthentication\Codecs;
 
 use JohnPetersonG17\JwtAuthentication\HashingAlgorithm;
-use JohnPetersonG17\JwtAuthentication\Token;
+use JohnPetersonG17\JwtAuthentication\Token\Token;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 

@@ -2,7 +2,7 @@
 
 namespace JohnPetersonG17\JwtAuthentication\Codecs;
 
-use JohnPetersonG17\JwtAuthentication\Token;
+use JohnPetersonG17\JwtAuthentication\Token\Token;
 
 interface CodecInterface {
 
