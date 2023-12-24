@@ -2,23 +2,76 @@
 
 namespace JohnPetersonG17\JwtAuthentication\Tests\Unit;
 
-use JohnPetersonG17\JwtAuthentication\TokenType;
+use JohnPetersonG17\JwtAuthentication\TokenPurpose;
 use JohnPetersonG17\JwtAuthentication\Token;
 use PHPUnit\Framework\TestCase;
 use DateTime;
 
 class TokenTest extends TestCase {
 
+    // TODO: Test more granular times for expiration logic
+
     /**
      * @test
      */
-    public function it_can_create_a_token()
+    public function it_is_expired_if_the_current_time_is_greater_than_the_expiration_time()
     {
         $token = new Token(
+            'someTokenId',
+            'someIssuer',
+            1,
+            TokenPurpose::ACCESS,
             new DateTime(),
-            new DateTime(),
-            'encoded_jwt',
-            TokenType::ACCESS_TOKEN
+            new DateTime('yesterday'), // Expires yesterday
+            'someValue',
         );
+
+        $this->assertTrue($token->isExpired());
+    }
+
+    /**
+     * @test
+     */
+    public function it_is_not_expired_if_the_current_time_is_less_than_the_expiration_time()
+    {
+        $token = new Token(
+            'someTokenId',
+            'someIssuer',
+            1,
+            TokenPurpose::ACCESS,
+            new DateTime(),
+            new DateTime('yesterday'), // Expires yesterday
+            'someValue',
+        );
+
+        $this->assertFalse($token->isExpired());
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_be_represented_as_an_array_correctly()
+    {
+        $expiresAt = new DateTime();
+        $issuedAt = new DateTime();
+
+        $token = new Token(
+            'someTokenId',
+            'someIssuer',
+            1,
+            TokenPurpose::ACCESS,
+            new DateTime(),
+            new DateTime('yesterday'), // Expires yesterday
+            'someValue',
+        );
+
+        $this->assertEqualsCanonicalizing([
+            'jti' => 'someTokenId',
+            'iss' => 'someIssuer',
+            'sub' => 1,
+            'prp' => TokenPurpose::ACCESS->value,
+            'iat' => $issuedAt->getTimestamp(),
+            'exp' => $expiresAt->getTimestamp(),
+        ], $token->toArray());
     }
 }

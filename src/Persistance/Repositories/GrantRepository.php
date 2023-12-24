@@ -1,6 +1,8 @@
 <?php
 
-namespace JohnPetersonG17\JwtAuthentication;
+namespace JohnPetersonG17\JwtAuthentication\Persistance\Repositories;
+
+use JohnPetersonG17\JwtAuthentication\Grant;
 
 interface GrantRepository
 {

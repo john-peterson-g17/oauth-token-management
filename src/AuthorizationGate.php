@@ -3,7 +3,7 @@
 namespace JohnPetersonG17\JwtAuthentication;
 
 // TODO: Better name for this
-class TokenManager {
+class AuthorizationGate {
 
     private Config $config;
     private TokenFactory $factory;
@@ -27,8 +27,8 @@ class TokenManager {
     public function grant(mixed $userId): Grant
     {
         // Create the tokens
-        $accessToken = $this->factory->make($userId, TokenType::ACCESS);
-        $refreshToken = $this->factory->make($userId, TokenType::REFRESH);
+        $accessToken = $this->factory->make($userId, TokenPurpose::ACCESS);
+        $refreshToken = $this->factory->make($userId, TokenPurpose::REFRESH);
 
         // TODO: Only persist if the config states a persistance driver is used
         // Persist the tokens
@@ -53,6 +53,16 @@ class TokenManager {
      * @return Token The new access token
      */
     public function refresh(string $refreshToken): Token
+    {
+
+    }
+
+    /**
+     * Authorizes a user based on their access token
+     * @param string $accessToken The raw string value of the access token
+     * @return bool
+     */
+    public function authorize(string $accessToken): bool
     {
 
     }

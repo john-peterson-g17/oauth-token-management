@@ -1,6 +1,6 @@
 <?php
 
-namespace JohnPetersonG17\JwtAuthentication;
+namespace JohnPetersonG17\JwtAuthentication\Persistance\Repositories;
 
 use Predis\Client;
 
@@ -44,7 +44,7 @@ class RedisGrantRepository implements GrantRepository {
 
     public function delete(Token $token): void
     {
-        $key = $this->createKey($token->userId(), $token->type());
+        $key = $this->createKey($token->userId(), $token->purpose());
         $this->client->delete($key);
     }
 
