@@ -127,7 +127,7 @@ class Config {
         return HashingAlgorithm::from($hashingAlgorithm);
     }
 
-    public function getValue(string $name): mixed
+    public function get(string $name): mixed
     {
         if (!isset($this->values[$name])) {
             throw new NotFoundException("Config value $name not found");

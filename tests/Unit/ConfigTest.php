@@ -15,11 +15,11 @@ class ConfigTest extends TestCase {
     {
         $config = new Config();
 
-        $this->assertEquals(Config::DEFAULT_ISSUER, $config->getValue('issuer'));
-        $this->assertEquals(Config::DEFAULT_KEY, $config->getValue('key'));
-        $this->assertEquals(Config::DEFAULT_ACCESS_TOKEN_EXPIRATION, $config->getValue('access_token_expiration'));
-        $this->assertEquals(Config::DEFAULT_REFRESH_TOKEN_EXPIRATION, $config->getValue('refresh_token_expiration'));
-        $this->assertEquals(Config::DEFAULT_HASHING_ALGORITHM, $config->getValue('hashing_algorithm'));
+        $this->assertEquals(Config::DEFAULT_ISSUER, $config->get('issuer'));
+        $this->assertEquals(Config::DEFAULT_KEY, $config->get('key'));
+        $this->assertEquals(Config::DEFAULT_ACCESS_TOKEN_EXPIRATION, $config->get('access_token_expiration'));
+        $this->assertEquals(Config::DEFAULT_REFRESH_TOKEN_EXPIRATION, $config->get('refresh_token_expiration'));
+        $this->assertEquals(Config::DEFAULT_HASHING_ALGORITHM, $config->get('hashing_algorithm'));
     }
 
     /**
@@ -33,7 +33,7 @@ class ConfigTest extends TestCase {
             ['issuer' => 'someIssuer']
         );
 
-        $this->assertEquals($expected, $config->getValue('issuer'));
+        $this->assertEquals($expected, $config->get('issuer'));
     }
 
     /**
@@ -84,7 +84,7 @@ class ConfigTest extends TestCase {
             ['key' => 'someKey']
         );
 
-        $this->assertEquals($expected, $config->getValue('key'));
+        $this->assertEquals($expected, $config->get('key'));
     }
 
     /**
@@ -135,7 +135,7 @@ class ConfigTest extends TestCase {
             ['access_token_expiration' => 1]
         );
 
-        $this->assertEquals($expected, $config->getValue('access_token_expiration'));
+        $this->assertEquals($expected, $config->get('access_token_expiration'));
     }
 
     /**
@@ -193,7 +193,7 @@ class ConfigTest extends TestCase {
             ['refresh_token_expiration' => 1]
         );
 
-        $this->assertEquals($expected, $config->getValue('refresh_token_expiration'));
+        $this->assertEquals($expected, $config->get('refresh_token_expiration'));
     }
 
     /**
@@ -249,8 +249,8 @@ class ConfigTest extends TestCase {
             ['hashing_algorithm' => $value]
         );
 
-        $this->assertInstanceOf(HashingAlgorithm::class, $config->getValue('hashing_algorithm'));
-        $this->assertEquals($value, $config->getValue('hashing_algorithm')->value);
+        $this->assertInstanceOf(HashingAlgorithm::class, $config->get('hashing_algorithm'));
+        $this->assertEquals($value, $config->get('hashing_algorithm')->value);
     }
 
     public static function validStringHashingAlgorithmProvider(): array
@@ -278,8 +278,8 @@ class ConfigTest extends TestCase {
             ['hashing_algorithm' => $value]
         );
 
-        $this->assertInstanceOf(HashingAlgorithm::class, $config->getValue('hashing_algorithm'));
-        $this->assertEquals($value, $config->getValue('hashing_algorithm'));
+        $this->assertInstanceOf(HashingAlgorithm::class, $config->get('hashing_algorithm'));
+        $this->assertEquals($value, $config->get('hashing_algorithm'));
     }
 
     public static function validEnumHashingAlgorithmProvider(): array
