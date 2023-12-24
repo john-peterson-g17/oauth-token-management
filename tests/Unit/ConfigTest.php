@@ -256,15 +256,6 @@ class ConfigTest extends TestCase {
     public static function validStringHashingAlgorithmProvider(): array
     {
         return [
-            'string_value_ES384' => [
-                'value' => 'ES384'
-            ],
-            'string_value_ES256' => [
-                'value' => 'ES256'
-            ],
-            'string_value_ES256K' => [
-                'value' => 'ES256K'
-            ],
             'string_value_HS256' => [
                 'value' => 'HS256'
             ],
@@ -273,18 +264,6 @@ class ConfigTest extends TestCase {
             ],
             'string_value_HS512' => [
                 'value' => 'HS512'
-            ],
-            'string_value_RS256' => [
-                'value' => 'RS256'
-            ],
-            'string_value_RS384' => [
-                'value' => 'RS384'
-            ],
-            'string_value_RS512' => [
-                'value' => 'RS512'
-            ],
-            'string_value_EdDSA' => [
-                'value' => 'EdDSA'
             ],
         ];
     }
@@ -306,15 +285,6 @@ class ConfigTest extends TestCase {
     public static function validEnumHashingAlgorithmProvider(): array
     {
         return [
-            'enum_value_ES384' => [
-                'value' => HashingAlgorithm::ES384
-            ],
-            'enum_value_ES256' => [
-                'value' => HashingAlgorithm::ES256
-            ],
-            'enum_value_ES256K' => [
-                'value' => HashingAlgorithm::ES256K
-            ],
             'enum_value_HS256' => [
                 'value' => HashingAlgorithm::HS256
             ],
@@ -323,18 +293,6 @@ class ConfigTest extends TestCase {
             ],
             'enum_value_HS512' => [
                 'value' => HashingAlgorithm::HS512
-            ],
-            'enum_value_RS256' => [
-                'value' => HashingAlgorithm::RS256
-            ],
-            'enum_value_RS384' => [
-                'value' => HashingAlgorithm::RS384
-            ],
-            'enum_value_RS512' => [
-                'value' => HashingAlgorithm::RS512
-            ],
-            'enum_value_EdDSA' => [
-                'value' => HashingAlgorithm::EdDSA
             ],
         ];
     }

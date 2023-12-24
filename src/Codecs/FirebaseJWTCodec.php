@@ -20,6 +20,7 @@ class FirebaseJWTCodec implements CodecInterface
 
     public function encode(Token $token): string
     {
+        // Headers are automatically added to encoded tokens by the Firebase JWT library
         return JWT::encode($token->toArray(), $this->key, $this->hashingAlgorithm->value);
     }
 

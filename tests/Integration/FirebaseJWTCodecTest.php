@@ -15,6 +15,8 @@ class FirebaseJWTCodecTest extends TestCase {
     private Token $token;
     private string $key = 'someKey';
 
+    // TODO: Test encoding and decoding with different hashing algorithms
+
     protected function setUp(): void
     {
         parent::setUp();
