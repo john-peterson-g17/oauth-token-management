@@ -40,7 +40,7 @@ class TokenTest extends TestCase {
             1,
             TokenPurpose::ACCESS,
             new DateTime(),
-            new DateTime('yesterday'), // Expires yesterday
+            new DateTime('tomorrow'), // Expires tomorrow
             'someValue',
         );
 
@@ -61,8 +61,7 @@ class TokenTest extends TestCase {
             1,
             TokenPurpose::ACCESS,
             new DateTime(),
-            new DateTime('yesterday'), // Expires yesterday
-            'someValue',
+            new DateTime(),
         );
 
         $this->assertEqualsCanonicalizing([
