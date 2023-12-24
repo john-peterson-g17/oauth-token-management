@@ -23,7 +23,6 @@ class TokenTest extends TestCase {
             TokenPurpose::ACCESS,
             new DateTime(),
             new DateTime('yesterday'), // Expires yesterday
-            'someValue',
         );
 
         $this->assertTrue($token->isExpired());
@@ -41,7 +40,6 @@ class TokenTest extends TestCase {
             TokenPurpose::ACCESS,
             new DateTime(),
             new DateTime('tomorrow'), // Expires tomorrow
-            'someValue',
         );
 
         $this->assertFalse($token->isExpired());
