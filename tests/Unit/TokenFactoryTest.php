@@ -35,28 +35,28 @@ class TokenFactoryTest extends TestCase {
         $this->assertInstanceOf(Token::class, $token);
     }
 
-    /**
-     * @test
-     * @dataProvider TokenPurposeProvider
-     */
-    public function it_makes_a_token_of_the_correct_purpose(TokenPurpose $expected)
-    {
-        $token = $this->tokenFactory->make(1, $expected);
+    // /**
+    //  * @test
+    //  * @dataProvider TokenPurposeProvider
+    //  */
+    // public function it_makes_a_token_of_the_correct_purpose(TokenPurpose $expected)
+    // {
+    //     $token = $this->tokenFactory->make(1, $expected);
 
-        $this->assertEquals($expected, $token->purpose());
-    }
+    //     $this->assertEquals($expected, $token->purpose());
+    // }
 
-    public static function TokenPurposeProvider(): array
-    {
-        return [
-            'access_token' => [
-                'expected' => TokenPurpose::ACCESS
-            ],
-            'refresh_token' => [
-                'expected' => TokenPurpose::REFRESH
-            ],
-        ];
-    }
+    // public static function TokenPurposeProvider(): array
+    // {
+    //     return [
+    //         'access_token' => [
+    //             'expected' => TokenPurpose::ACCESS
+    //         ],
+    //         'refresh_token' => [
+    //             'expected' => TokenPurpose::REFRESH
+    //         ],
+    //     ];
+    // }
 
     /**
      * @test

@@ -13,7 +13,6 @@ class Token
     private DateTimeInterface $issuedAt;
     private DateTimeInterface $expiresAt;
 
-
     public function __construct(
         mixed $id,
         string $issuer,

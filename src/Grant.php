@@ -6,29 +6,15 @@ namespace JohnPetersonG17\JwtAuthentication;
 // It is a statement of successful authentication and access granted to the system
 class Grant {
 
-    private mixed $userId;
-    private Token $accessToken;
-    private Token $refreshToken;
+    private string $accessToken;
+    private string $refreshToken;
+    private int $expiresInSeconds;
 
-    public function __construct(mixed $userId, Token $accessToken, Token $refreshToken) {
-        $this->userId = $userId;
+    public function __construct(string $accessToken, string $refreshToken, int $expiresInSeconds) {
         $this->accessToken = $accessToken;
         $this->refreshToken = $refreshToken;
+        $this->expiresInSeconds = $expiresInSeconds;
     }
-
-    public function userId(): mixed
-    {
-        return $this->userId;
-    }
-
-    // TODO: Not sure if these methods are needed
-    // public function accessToken(): Token {
-    //     return $this->accessToken;
-    // }
-
-    // public function refreshToken(): Token {
-    //     return $this->refreshToken;
-    // }
 
     /**
      * An array representation of the grant which can be used in an HTTP Response
@@ -36,15 +22,12 @@ class Grant {
      */
     public function toArray(): array {
         return [
-            'access_token' => $this->accessToken->value(),
-            'refresh_token' => $this->refreshToken->value(),
-            'expires_in' => $this->accessToken->expiresAt()->getTimestamp() - time(),
+            'access_token' => $this->accessToken,
+            'refresh_token' => $this->refreshToken,
+            'expires_in' => $this->expiresInSeconds,
             'token_type' => 'Bearer'
         ];
     }
-
-    // TODO: Another array representation for persistance that keeps all the token meta data
-    // $token->toArray()
 
     public function _toString(): string {
         return json_encode($this->toArray());

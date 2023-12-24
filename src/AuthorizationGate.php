@@ -11,6 +11,8 @@ class AuthorizationGate {
     public function __construct(Config $config) {
         $this->config = $config;
 
+        // Parse Config
+
         // Setup needed classes
         // TODO: Setup persistance driver/repository
         // TODO Setup predis client and inject

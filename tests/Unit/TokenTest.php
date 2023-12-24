@@ -2,8 +2,8 @@
 
 namespace JohnPetersonG17\JwtAuthentication\Tests\Unit;
 
-use JohnPetersonG17\JwtAuthentication\TokenPurpose;
-use JohnPetersonG17\JwtAuthentication\Token;
+use JohnPetersonG17\JwtAuthentication\Token\TokenPurpose;
+use JohnPetersonG17\JwtAuthentication\Token\Token;
 use PHPUnit\Framework\TestCase;
 use DateTime;
 
