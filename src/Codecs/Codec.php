@@ -4,7 +4,10 @@ namespace JohnPetersonG17\JwtAuthentication\Codecs;
 
 use JohnPetersonG17\JwtAuthentication\Token\Token;
 
-interface CodecInterface {
+/**
+ * A Codec is responsible for encoding and decoding a Token
+ */
+interface Codec {
 
     /**
      * Encodes a Token into a JWT string

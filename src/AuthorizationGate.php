@@ -8,6 +8,7 @@ use JohnPetersonG17\JwtAuthentication\Token\TokenPurpose;
 use JohnPetersonG17\JwtAuthentication\Token\TokenFactory;
 use JohnPetersonG17\JwtAuthentication\Token\Exceptions\TokenExpiredException;
 use JohnPetersonG17\JwtAuthentication\Persistance\Exceptions\NotFoundException;
+use JohnPetersonG17\JwtAuthentication\Codecs\Codec;
 
 class AuthorizationGate {
 
@@ -43,15 +44,25 @@ class AuthorizationGate {
     }
 
     /**
+     * Sets the Codec to be used for encoding and decoding tokens
+     * This method allows additional flexability for implementing custom Codecs
+     * @param Codec $codec
+     * @return void
+     */
+    public function setCodec(Codec $codec): void
+    {
+        $this->codec = $codec;
+    }
+
+    // TODO: Method to retrieve a grant for a user?
+
+    /**
      * Grants an Access and Refresh token to a user who has successfully authenticated
      * @param mixed $userId
      * @return Grant
      */
     public function grant(mixed $userId): Grant
     {
-        // Check if a grant for the user already exists
-        // Throws a NotFoundException if not found
-
         // Create the tokens
         $accessToken = $this->factory->make($userId, TokenPurpose::ACCESS);
         $refreshToken = $this->factory->make($userId, TokenPurpose::REFRESH);

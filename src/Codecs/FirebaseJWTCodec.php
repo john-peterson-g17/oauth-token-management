@@ -7,7 +7,7 @@ use JohnPetersonG17\JwtAuthentication\Token\Token;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
-class FirebaseJWTCodec implements CodecInterface
+class FirebaseJWTCodec implements Codec
 {
     private string $key;
     private HashingAlgorithm $hashingAlgorithm;
