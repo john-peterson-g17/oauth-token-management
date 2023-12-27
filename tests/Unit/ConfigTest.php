@@ -4,6 +4,7 @@ namespace JohnPetersonG17\JwtAuthentication\Tests\Unit;
 
 use JohnPetersonG17\JwtAuthentication\Config;
 use JohnPetersonG17\JwtAuthentication\HashingAlgorithm;
+use JohnPetersonG17\JwtAuthentication\Persistance\Driver;
 use PHPUnit\Framework\TestCase;
 
 class ConfigTest extends TestCase {
@@ -20,6 +21,25 @@ class ConfigTest extends TestCase {
         $this->assertEquals(Config::DEFAULT_ACCESS_TOKEN_EXPIRATION, $config->get('access_token_expiration'));
         $this->assertEquals(Config::DEFAULT_REFRESH_TOKEN_EXPIRATION, $config->get('refresh_token_expiration'));
         $this->assertEquals(Config::DEFAULT_HASHING_ALGORITHM, $config->get('hashing_algorithm'));
+        $this->assertEquals(Config::DEFAULT_PERSISTANCE_DRIVER, $config->get('persistance_driver'));
+
+        // These should not be defined for the default persistance driver which is not redis
+        $this->assertFalse($config->has('redis.parameters'));
+        $this->assertFalse($config->has('redis.options'));
+    }
+
+    /**
+     * @test
+     */
+    public function it_returns_expected_redis_defaults_when_redis_persistance_driver_is_set()
+    {
+        $config = new Config(
+            ['persistance_driver' => Driver::Redis]
+        );
+
+        $this->assertEquals(Driver::Redis, $config->get('persistance_driver'));
+        $this->assertEquals(Config::DEFAULT_REDIS_PARAMETERS, $config->get('redis.parameters'));
+        $this->assertEquals(Config::DEFAULT_REDIS_OPTIONS, $config->get('redis.options'));
     }
 
     /**
@@ -297,6 +317,121 @@ class ConfigTest extends TestCase {
         ];
     }
 
+    /**
+     * @test
+     * @dataProvider invalidHashingAlgorithmProvider
+     */
+    public function it_throws_an_exception_when_setting_an_invalid_hashing_algorithm($hashing_algorithm)
+    {
+        $this->expectException(\InvalidArgumentException::class);
 
+        new Config(
+            ['hashing_algorithm' => $hashing_algorithm]
+        );
+    }
+
+    public static function invalidHashingAlgorithmProvider() // Anything that is not the HashingAlgorithm enum or an equivalent string
+    {
+        return [
+            'hashing_algorithm_is_empty string' => [
+                'hashing_algorithm' => ''
+            ],
+            'hashing_algorithm_is_array' => [
+                'hashing_algorithm' => []
+            ],
+            'hashing_algorithm_is_object' => [
+                'hashing_algorithm' => new \stdClass()
+            ],
+            'hashing_algorithm_is_boolean' => [
+                'hashing_algorithm' => true
+            ],
+            'hashing_algorithm_is_string' => [
+                'hashing_algorithm' => '1'
+            ],
+            'hashing_algorithm_is_float' => [
+                'hashing_algorithm' => 1.1
+            ],
+            'hashing_algorithm_is_negative' => [
+                'hashing_algorithm' => -1
+            ],
+            'hashing_algorithm_is_zero' => [
+                'hashing_algorithm' => 0
+            ],
+            'hashing_algorithm_is_invalid' => [
+                'hashing_algorithm' => 'invalidOrNonExistantAlgorithm'
+            ],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider validEnumPersistanceDriverProvider
+     */
+    public function it_can_set_and_get_a_valid_enum_persistance_driver($driver)
+    {
+        $config = new Config(
+            ['persistance_driver' => $driver]
+        );
+
+        $this->assertEquals($driver, $config->get('persistance_driver'));
+    }
+
+    public static function validEnumPersistanceDriverProvider(): array
+    {
+        return [
+            'enum_value_Redis' => [
+                'persistance_driver' => Driver::Redis
+            ],
+            'enum_value_None' => [
+                'persistance_driver' => Driver::None
+            ],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider invalidPersistanceDriverProvider
+     */
+    public function it_throws_an_exception_when_setting_an_invalid_persistance_driver($persistance_driver)
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        new Config(
+            ['persistance_driver' => $persistance_driver]
+        );
+    }
+
+    public static function invalidPersistanceDriverProvider() // Anything that is not the Driver enum
+    {
+        return [
+            'persistance_driver_is_empty string' => [
+                'persistance_driver' => ''
+            ],
+            'persistance_driver_is_array' => [
+                'persistance_driver' => []
+            ],
+            'persistance_driver_is_object' => [
+                'persistance_driver' => new \stdClass()
+            ],
+            'persistance_driver_is_boolean' => [
+                'persistance_driver' => true
+            ],
+            'persistance_driver_is_string' => [
+                'persistance_driver' => '1'
+            ],
+            'persistance_driver_is_float' => [
+                'persistance_driver' => 1.1
+            ],
+            'persistance_driver_is_negative' => [
+                'persistance_driver' => -1
+            ],
+            'persistance_driver_is_zero' => [
+                'persistance_driver' => 0
+            ],
+            'persistance_driver_is_invalid' => [
+                'persistance_driver' => 'invalidOrNonExistantDriver'
+            ],
+        ];
+    }
     
 }
