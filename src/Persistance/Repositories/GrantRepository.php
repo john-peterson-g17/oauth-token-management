@@ -22,7 +22,7 @@ interface GrantRepository
     public function find(mixed $userId): Grant;
 
     /**
-     * Delete a grant from the data store
+     * Delete a grant from the data store by its user id
      * @param mixed userId
      * @return void
      */

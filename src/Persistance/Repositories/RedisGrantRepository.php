@@ -2,54 +2,47 @@
 
 namespace JohnPetersonG17\JwtAuthentication\Persistance\Repositories;
 
+use JohnPetersonG17\JwtAuthentication\Persistance\Exceptions\NotFoundException;
+use JohnPetersonG17\JwtAuthentication\Grant;
 use Predis\Client;
 
 class RedisGrantRepository implements GrantRepository {
 
     // TODO: Support to configure the prefix
-    private const PREFIX = 'jwt-auth:';
 
     private Client $client;
-    private TokenFactory $tokenFactory;
 
-    public function __construct(Client $client, TokenFactory $tokenFactory)
+    public function __construct(Client $client)
     {
         $this->client = $client;
-        $this->tokenFactory = $tokenFactory;
     }
 
     public function save(Grant $grant): void
     {
-        $key = $this->createKey($grant->userId());
-        $this->client->set($key, $grant->_toString());
+        $this->client->set($grant->userId(), $grant);
     }
 
-    // TODO: Be able to look up the access token based on the refresh token associated with it
     public function find(mixed $userId): Grant
     {
-        $key = $this->createKey($userId);
-        $rawGrant = $this->client->get($key);
+        $rawGrant = $this->client->get($userId);
 
-        if(!isset($rawGrant)) {
+        if(!isset($rawGrant) || empty($rawGrant)) {
             throw new NotFoundException("Grant for user $userId not found");
         }
 
         $grantArray = json_decode($rawGrant, true);
 
-        $accessToken = $this->tokenFactory->fromValue($grantArray['access_token']);
-        $refreshToken = $this->tokenFactory->fromValue($grantArray['refresh_token']);
-
-        return new Grant($userId, $accessToken, $refreshToken);
+        return new Grant(
+            $grantArray['user_id'], 
+            $grantArray['access_token'], 
+            $grantArray['refresh_token'], 
+            $grantArray['expires_in']
+        );
     }
 
-    public function delete(Token $token): void
+    public function delete(mixed $userId): void
     {
-        $key = $this->createKey($token->userId(), $token->purpose());
-        $this->client->delete($key);
-    }
-
-    private function createKey(mixed $userId): string
-    {
-        return self::PREFIX . $userId;
+        // Predis has no delete command so we set the entry to null
+        $this->client->set($userId, null);
     }
 }

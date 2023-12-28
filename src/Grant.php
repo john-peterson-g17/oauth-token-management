@@ -10,14 +10,14 @@ class Grant {
     private mixed $userId;
     private string $accessToken;
     private string $refreshToken;
-    private int $expiresInSeconds;
+    private int $expiresIn; // The number of seconds that the access token in this grant expires in
 
-    public function __construct(mixed $userId, string $accessToken, string $refreshToken, int $expiresInSeconds)
+    public function __construct(mixed $userId, string $accessToken, string $refreshToken, int $expiresIn)
     {
         $this->userId = $userId;
         $this->accessToken = $accessToken;
         $this->refreshToken = $refreshToken;
-        $this->expiresInSeconds = $expiresInSeconds;
+        $this->expiresIn = $expiresIn;
     }
 
     /**
@@ -48,39 +48,39 @@ class Grant {
     }
 
     /**
-     * Get the grant in array form
-     * @return array
+     * Get the number of seconds seconds that the access token in this grant expires in
+     * @return int
      */
-    public function toArray(): array
+    public function expiresIn(): int
+    {
+        return $this->expiresIn;
+    }
+
+    /**
+     * Get the token type of the Grant for Oauth2 Responses
+     * @return string
+     */
+    public function tokenType(): string
+    {
+        return 'Bearer';
+    }
+
+    private function toArray(): array
     {
         return [
             'user_id' => $this->userId,
             'access_token' => $this->accessToken,
             'refresh_token' => $this->refreshToken,
-            'expires_in' => $this->expiresInSeconds,
+            'expires_in' => $this->expiresIn,
         ];
     }
 
     /**
-     * Get the grant in JSON form
+     * Get the grant in JSON string form
      * @return string
      */
-    public function _toString(): string
+    public function __toString()
     {
         return json_encode($this->toArray());
-    }
-
-    /**
-     * Get the grant in a stable form that can be used in API Responses
-     * @return array
-     */
-    public function toResponseArray(): array
-    {
-        return [
-            'access_token' => $this->accessToken,
-            'refresh_token' => $this->refreshToken,
-            'expires_in' => $this->expiresInSeconds,
-            'token_type' => 'Bearer',
-        ];
     }
 }
