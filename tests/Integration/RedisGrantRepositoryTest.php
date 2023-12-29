@@ -18,7 +18,6 @@ class RedisGrantRepositoryTest extends TestCase {
     {
         parent::setUp();
 
-        // TODO: Finish setting up connection to the redis container
         $dotenv = Dotenv\Dotenv::createMutable(__DIR__ . '/../../');
         $dotenv->load();
 
