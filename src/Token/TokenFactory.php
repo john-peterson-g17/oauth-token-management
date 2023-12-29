@@ -86,7 +86,7 @@ class TokenFactory
             $raw['sub'],
             TokenPurpose::from($raw['prp']),
             (new DateTimeImmutable())->setTimestamp($raw['iat']),
-            (new DateTimeImmutable)->setTimestamp($raw['exp'])
+            (new DateTimeImmutable())->setTimestamp($raw['exp'])
         );
     }
 

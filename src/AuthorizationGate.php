@@ -6,22 +6,36 @@ use JohnPetersonG17\JwtAuthentication\Codecs\FirebaseJWTCodec;
 use JohnPetersonG17\JwtAuthentication\Grant;
 use JohnPetersonG17\JwtAuthentication\Token\TokenPurpose;
 use JohnPetersonG17\JwtAuthentication\Token\TokenFactory;
-use JohnPetersonG17\JwtAuthentication\Token\Exceptions\TokenExpiredException;
-use JohnPetersonG17\JwtAuthentication\Persistance\Exceptions\NotFoundException;
+use JohnPetersonG17\JwtAuthentication\Exceptions\TokenExpiredException;
+use JohnPetersonG17\JwtAuthentication\Exceptions\NotFoundException;
 use JohnPetersonG17\JwtAuthentication\Codecs\Codec;
+use JohnPetersonG17\JwtAuthentication\Exceptions\PersistanceDriverNotSetException;
+use JohnPetersonG17\JwtAuthentication\Persistance\Driver;
+use JohnPetersonG17\JwtAuthentication\Persistance\Repositories\GrantRepository;
+use JohnPetersonG17\JwtAuthentication\Persistance\Repositories\RedisGrantRepository;
+use Predis\Client;
 
 class AuthorizationGate {
 
     private Config $config;
     private TokenFactory $factory;
     private FirebaseJWTCodec $codec;
+    private GrantRepository $repository;
 
     public function __construct(Config $config) {
         $this->config = $config;
 
-        // Setup needed classes
+        $this->setupClasses();
+    }
+
+    private function setupClasses(): void
+    {
         $this->setupTokenFactory();
         $this->setupCodec();
+
+        if ($this->config->get('persistance_driver') !== Driver::None) {
+            $this->setupRepository();
+        }
     }
 
     private function setupTokenFactory(): void
@@ -43,6 +57,17 @@ class AuthorizationGate {
         );
     }
 
+    private function setupRepository(): void
+    {
+        // TODO: Potentially move this to a factory class
+        if ($this->config->get('persistance_driver') === Driver::Redis) {
+            $this->repository = new RedisGrantRepository(
+                new Client($this->config->get('redis.parameters'), $this->config->get('redis.options')),
+            );
+        }
+        // TODO: Other persistance drivers
+    }
+
     /**
      * Sets the Codec to be used for encoding and decoding tokens
      * This method allows additional flexability for implementing custom Codecs
@@ -54,7 +79,17 @@ class AuthorizationGate {
         $this->codec = $codec;
     }
 
-    // TODO: Method to retrieve a grant for a user?
+    /**
+     * Sets the Config to be used for the AuthorizationGate
+     * This method allows additional flexability to swap configs after creating the Authorization Gate
+     * @param Config $config
+     * @return void
+     */
+    public function setConfig(Config $config): void
+    {
+        $this->config = $config;
+        $this->setupClasses(); // Re-setup classes with new config
+    }
 
     /**
      * Grants an Access and Refresh token to a user who has successfully authenticated
@@ -67,15 +102,19 @@ class AuthorizationGate {
         $accessToken = $this->factory->make($userId, TokenPurpose::ACCESS);
         $refreshToken = $this->factory->make($userId, TokenPurpose::REFRESH);
 
-        // TODO: Only persist if the config states a persistance driver is used
-        // Persist the tokens
-
-        return new Grant(
+        $grant = new Grant(
             $userId,
             $this->codec->encode($accessToken),
             $this->codec->encode($refreshToken),
             $this->config->get('access_token_expiration'),
         );
+
+        // Persist the tokens if using a persistance driver
+        if($this->config->get('persistance_driver') !== Driver::None) {
+            $this->repository->save($grant);
+        }
+
+        return $grant;
     }
 
     /**
@@ -85,8 +124,30 @@ class AuthorizationGate {
      */
     public function revoke(mixed $userId): void
     {
-        // Delete the grant
-        $this->repository->delete($userId);
+        if ($this->config->get('persistance_driver') !== Driver::None) {
+            // Delete the grant
+            $this->repository->delete($userId);
+            return;
+        }
+
+        throw new PersistanceDriverNotSetException('Persistance driver is not set. Unable to revoke grant.');
+    }
+
+    /**
+     * Retrieves a users Access and Refresh tokens (Grant)
+     * @param mixed $userId
+     * @throws NotFoundException if the grant is not found
+     * @throws PersistanceDriverNotSetException if the persistance driver is not set
+     * @return Grant
+     */
+    public function retrieve(mixed $userId): Grant
+    {
+        // Retrieve the grant
+        if($this->config->get('persistance_driver') !== Driver::None) {
+            return $this->repository->find($userId); // Throws NotFoundException if not found
+        }
+
+        throw new PersistanceDriverNotSetException('Persistance driver is not set. Unable to retrieve grant.');
     }
 
     /**
@@ -94,16 +155,22 @@ class AuthorizationGate {
      * @param string $refreshToken The raw string value of the refresh token
      * @throws TokenNotFoundException if the refresh token is not found
      * @throws TokenExpiredException if token is expired
-     * @return string The new access token
+     * @return Grant a grant with the new access token
      */
-    public function refresh(string $refreshToken): string
+    public function refresh(string $refreshToken): Grant
     {
+        if ($this->config->get('persistance_driver') === Driver::None) {
+            throw new PersistanceDriverNotSetException('Persistance driver is not set. Unable to refresh grant.');
+        }
+
         // Check if the refresh token is expired
         $decodedRefreshToken = $this->factory->makeFromRaw($this->codec->decode($refreshToken));
         if ($decodedRefreshToken->isExpired()) {
             throw new TokenExpiredException('Refresh token is expired');
         }
 
+        // TODO: Finish testing this logic
+        
         // Check if a grant for the user exists
         // Throws a NotFoundException if not found
         $userId = $decodedRefreshToken->subject();
@@ -120,8 +187,9 @@ class AuthorizationGate {
             $this->config->get('access_token_expiration'), // Use the config value for the expiration which is "reset"
         );
 
-        // Persist the grant
         $this->repository->save($grant);
+        
+        return $grant;
     }
 
     /**
