@@ -1,6 +1,6 @@
 <?php
 
-namespace JohnPetersonG17\JwtAuthentication\Tests\Unit;
+namespace JohnPetersonG17\JwtAuthentication\Tests\Integration;
 
 use JohnPetersonG17\JwtAuthentication\Codecs\FirebaseJWTCodec;
 use JohnPetersonG17\JwtAuthentication\Token\TokenPurpose;

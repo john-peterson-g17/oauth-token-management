@@ -34,6 +34,11 @@ class ArrayDotNotationParserTest extends TestCase {
                 'some.nested.array',
                 'value',
             ],
+            'existing_empty_array_as_value' => [
+                ['some' => ['nested' => ['array' => []]]],
+                'some.nested.array',
+                [],
+            ],
             'non_existing_value_deep_in_array' => [
                 ['some' => ['nested' => ['array' => 'value']]],
                 'some.nested.array.key.that.does.not.exist',

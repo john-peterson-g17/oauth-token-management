@@ -2,7 +2,9 @@
 
 namespace JohnPetersonG17\JwtAuthentication;
 
+use JohnPetersonG17\JwtAuthentication\Exceptions\NotFoundException;
 use JohnPetersonG17\JwtAuthentication\HashingAlgorithm;
+use JohnPetersonG17\JwtAuthentication\Helpers\ArrayDotNotationParser;
 use JohnPetersonG17\JwtAuthentication\Persistance\Driver;
 
 class Config {
@@ -196,7 +198,13 @@ class Config {
     {
         // Parse dot notation
         if(str_contains($name, '.')) {
-            return $this->parseValueFromDotNotation($name);
+            $value = $this->parseValueFromDotNotation($name);
+
+            if ($value === null) {
+                throw new NotFoundException("Config value $name not found");
+            }
+
+            return $value;
         }
 
         // String does not have dot notation
@@ -209,17 +217,7 @@ class Config {
 
     private function parseValueFromDotNotation(string $name): mixed
     {
-        $parts = explode('.', $name);
-
-        foreach ($parts as $part) {
-            if (!isset($this->values[$part])) {
-                throw new NotFoundException("Config value $name not found");
-            }
-
-            $this->values[$part];
-        }
-
-        return $value;
+        return ArrayDotNotationParser::parse($this->values, $name);
     }
 
     /**

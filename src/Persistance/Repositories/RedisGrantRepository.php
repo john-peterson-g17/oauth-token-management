@@ -2,7 +2,7 @@
 
 namespace JohnPetersonG17\JwtAuthentication\Persistance\Repositories;
 
-use JohnPetersonG17\JwtAuthentication\Persistance\Exceptions\NotFoundException;
+use JohnPetersonG17\JwtAuthentication\Exceptions\NotFoundException;
 use JohnPetersonG17\JwtAuthentication\Grant;
 use Predis\Client;
 

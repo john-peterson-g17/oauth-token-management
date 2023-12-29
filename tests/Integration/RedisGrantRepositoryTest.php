@@ -6,7 +6,7 @@ use JohnPetersonG17\JwtAuthentication\Persistance\Repositories\RedisGrantReposit
 use Predis\Client;
 use Dotenv;
 use JohnPetersonG17\JwtAuthentication\Grant;
-use JohnPetersonG17\JwtAuthentication\Persistance\Exceptions\NotFoundException;
+use JohnPetersonG17\JwtAuthentication\Exceptions\NotFoundException;
 use PHPUnit\Framework\TestCase;
 
 class RedisGrantRepositoryTest extends TestCase {
