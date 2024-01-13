@@ -2,6 +2,7 @@
     "name": "john-peterson-g17/jwt-authentication",
     "description": "A framework agnostic php implementation of JWT authentication built on top of the firebase/php-jwt package",
     "type": "library",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "JohnPetersonG17\\JwtAuthentication\\": "src/",
@@ -20,6 +21,7 @@
         "vlucas/phpdotenv": "^5.6"
     },
     "require": {
+        "php": ">=8.2",
         "firebase/php-jwt": "^6.10",
         "ramsey/uuid": "^4.7",
         "predis/predis": "^2.2"
