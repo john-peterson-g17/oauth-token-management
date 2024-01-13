@@ -7,12 +7,14 @@ use JohnPetersonG17\JwtAuthentication\Grant;
 use JohnPetersonG17\JwtAuthentication\Config;
 use JohnPetersonG17\JwtAuthentication\Persistance\Driver;
 use JohnPetersonG17\JwtAuthentication\Exceptions\NotFoundException;
-use Dotenv\Dotenv;
 use JohnPetersonG17\JwtAuthentication\Exceptions\PersistanceDriverNotSetException;
 use JohnPetersonG17\JwtAuthentication\Exceptions\TokenExpiredException;
+use JohnPetersonG17\JwtAuthentication\Tests\Helpers\LoadsEnvironmentVariables;
 use PHPUnit\Framework\TestCase;
 
 class AuthorizationGateTest extends TestCase {
+
+    use LoadsEnvironmentVariables;
 
     private AuthorizationGate $gate;
     private $host;
@@ -22,8 +24,7 @@ class AuthorizationGateTest extends TestCase {
     {
         parent::setUp();
 
-        $dotenv = Dotenv::createMutable(__DIR__ . '/../../');
-        $dotenv->load();
+        $this->loadEnvironmentVariables();
 
         $this->host = $_ENV['REDIS_HOST'];
         $this->port = $_ENV['REDIS_PORT'];

@@ -4,12 +4,14 @@ namespace JohnPetersonG17\JwtAuthentication\Tests\Integration;
 
 use JohnPetersonG17\JwtAuthentication\Persistance\Repositories\RedisGrantRepository;
 use Predis\Client;
-use Dotenv;
 use JohnPetersonG17\JwtAuthentication\Grant;
 use JohnPetersonG17\JwtAuthentication\Exceptions\NotFoundException;
+use JohnPetersonG17\JwtAuthentication\Tests\Helpers\LoadsEnvironmentVariables;
 use PHPUnit\Framework\TestCase;
 
 class RedisGrantRepositoryTest extends TestCase {
+
+    use LoadsEnvironmentVariables;
 
     private Client $client;
     private RedisGrantRepository $repository;
@@ -18,8 +20,7 @@ class RedisGrantRepositoryTest extends TestCase {
     {
         parent::setUp();
 
-        $dotenv = Dotenv\Dotenv::createMutable(__DIR__ . '/../../');
-        $dotenv->load();
+        $this->loadEnvironmentVariables();
 
         $host = $_ENV['REDIS_HOST'];
         $port = $_ENV['REDIS_PORT'];
