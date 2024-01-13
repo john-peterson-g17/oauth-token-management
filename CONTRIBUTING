@@ -4,10 +4,42 @@ Anyone is welcome to contribute to this project following the guidelines below.
 
 ## How to Contribute
 
+### Local Environment Setup
+
+1. Ensure that you have Docker and Docker Compose tools installed
+   1. https://docs.docker.com/get-docker/
+   2. https://docs.docker.com/compose/
+2. Ensure that you have PHP 8.2 Installed
+   1. https://www.php.net/releases/8.2/en.php
+3. Ensure that you have Composer installed
+   1. https://getcomposer.org/
+4. Clone the repository on your local machine
+   1. Create a new `.env` file, copy in the contents from the `.env.example` file
+   2. Install dependancies via executing the command: `composer install`
+
+### Contributing
+
 1. Create a new branch with a name to describe your contribution from the `main` branch
 2. Create your new feature
    1. Ensure that you have added unit tests!
 3. Submit a Pull Request to merge your branch back into the `main` branch
    1. Maintainers will automatically be added to review your Pull Request when it is created
+   2. Please be very descriptive in your Pull Request Description!
+      1. Summarize the changes you made
+      2. Explicitly make known the intent behind your changes (The Why)
+      3. Describe how your changes benefit the package
+      4. Callout any breaking changes so that the package can be versioned appropriately
 4. Ensure that all checks/pipelines are passing
 5. Work with the Reviewers to make any necessary adjustments.
+
+## Docker Compose
+
+As this package can utilize database and other persistance storage dependancies, containerized versions of those dependancies are defined in the `docker-compose.yaml` file for ease of local development.
+
+Some integration tests depend on the containers defined there and they can be easily spun up with this command: `docker-compose up`
+
+Also note that the default values in the `.env.example` file are set to connect to those containers.
+
+## Automated Tests
+
+This package is covered by automated integration and unit tests which can be easily executed with this command: `./vendor/bin/phpunit`
