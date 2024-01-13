@@ -20,6 +20,9 @@ Anyone is welcome to contribute to this project following the guidelines below.
 ### Contributing
 
 1. Create a new branch with a name to describe your contribution from the `main` branch
+   1. If your branch is related to a GitHub Issue for the Project please preface your branch name with the Issue ID
+      1. Example: `6-some-github-issue-with-id-6`
+      2. Reference: [GitHub - Tracking Your Work with Issues](https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-a-branch-for-an-issue)
 2. Create your new feature
    1. Ensure that you have added unit tests!
 3. Submit a Pull Request to merge your branch back into the `main` branch
