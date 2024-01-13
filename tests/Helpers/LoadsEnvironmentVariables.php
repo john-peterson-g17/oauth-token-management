@@ -14,7 +14,7 @@ trait LoadsEnvironmentVariables {
             echo "\nWARNING! Unable to load .env file due to Exception: \n";
             echo get_class($e);
             echo "\n" . $e->getMessage() . "\n";
-            echo "Assuming that .env file is not used.";
+            echo "Assuming that .env file is not used.\n";
         }
     }
 }
