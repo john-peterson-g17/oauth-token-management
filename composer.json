@@ -1,6 +1,6 @@
 {
     "name": "john-peterson-g17/oauth-token-management",
-    "description": "A framework agnostic abstraction for managing tokens/grants in the OAuth 2.0 flow as described in RFC 6740. This package would be a module inside of your Authorization Server used to manage tokens",
+    "description": "A framework agnostic abstraction for managing tokens/grants in the OAuth 2.0 flow as described in RFC 6749. This package would be a module inside of your Authorization Server used to manage tokens",
     "type": "library",
     "license": "MIT",
     "autoload": {
