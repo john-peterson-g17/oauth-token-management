@@ -1,10 +1,10 @@
 <?php
 
-namespace JohnPetersonG17\JwtAuthentication\Tests\Unit;
+namespace JohnPetersonG17\OAuthTokenManagement\Tests\Unit;
 
-use JohnPetersonG17\JwtAuthentication\Token\TokenPurpose;
-use JohnPetersonG17\JwtAuthentication\Token\Token;
-use JohnPetersonG17\JwtAuthentication\Token\TokenFactory;
+use JohnPetersonG17\OAuthTokenManagement\Token\TokenPurpose;
+use JohnPetersonG17\OAuthTokenManagement\Token\Token;
+use JohnPetersonG17\OAuthTokenManagement\Token\TokenFactory;
 use DateInterval;
 use DateTimeZone;
 use PHPUnit\Framework\TestCase;

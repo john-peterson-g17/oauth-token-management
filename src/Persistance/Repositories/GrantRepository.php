@@ -1,8 +1,8 @@
 <?php
 
-namespace JohnPetersonG17\JwtAuthentication\Persistance\Repositories;
+namespace JohnPetersonG17\OAuthTokenManagement\Persistance\Repositories;
 
-use JohnPetersonG17\JwtAuthentication\Grant;
+use JohnPetersonG17\OAuthTokenManagement\Grant;
 
 interface GrantRepository
 {

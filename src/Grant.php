@@ -1,6 +1,6 @@
 <?php
 
-namespace JohnPetersonG17\JwtAuthentication;
+namespace JohnPetersonG17\OAuthTokenManagement;
 
 // A Grant is a set of tokens that are issued to a client
 // It is a statement of successful authentication and access granted to the system

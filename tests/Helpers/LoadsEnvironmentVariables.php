@@ -1,6 +1,6 @@
 <?php
 
-namespace JohnPetersonG17\JwtAuthentication\Tests\Helpers;
+namespace JohnPetersonG17\OAuthTokenManagement\Tests\Helpers;
 
 use Dotenv\Dotenv;
 

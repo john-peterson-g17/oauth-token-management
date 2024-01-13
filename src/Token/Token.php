@@ -1,6 +1,6 @@
 <?php
 
-namespace JohnPetersonG17\JwtAuthentication\Token;
+namespace JohnPetersonG17\OAuthTokenManagement\Token;
 
 use DateTimeInterface;
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace JohnPetersonG17\JwtAuthentication\Codecs;
+namespace JohnPetersonG17\OAuthTokenManagement\Codecs;
 
 use Firebase\JWT\ExpiredException;
-use JohnPetersonG17\JwtAuthentication\HashingAlgorithm;
-use JohnPetersonG17\JwtAuthentication\Token\Token;
-use JohnPetersonG17\JwtAuthentication\Exceptions\TokenExpiredException;
+use JohnPetersonG17\OAuthTokenManagement\HashingAlgorithm;
+use JohnPetersonG17\OAuthTokenManagement\Token\Token;
+use JohnPetersonG17\OAuthTokenManagement\Exceptions\TokenExpiredException;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 

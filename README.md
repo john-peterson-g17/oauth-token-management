@@ -1,13 +1,13 @@
-# JWT Authentication
+# OAuth 2.0 Token Management
 
-This project seeks to be an unbiased framework agnostic php implementation of JWT authentication. More specifically if you were creating an Authorization Server this package would be the module within that Authorization Server responsible for:
+This project seeks to be an unbiased framework agnostic module for managing tokens in the OAuth 2.0 per [RFC 6749](https://datatracker.ietf.org/doc/html/rfc6749). More specifically if you were creating an Authorization Server this package would be the module within that Authorization Server responsible for:
 
 1. Issueing Tokens
 2. Revoking Tokens
 3. Refreshing Access Tokens
 4. etc..
 
-Reference the definition of the Authorization Server in Oauth2 as defined in [RFC 6749](https://datatracker.ietf.org/doc/html/rfc6749#section-1.1)
+Reference the definition of the Authorization Server in OAuth 2.0 as defined in [RFC 6749](https://datatracker.ietf.org/doc/html/rfc6749#section-1.1)
 
 ## Concepts
 
@@ -48,10 +48,10 @@ composer require @john-peterson-g17/jwt-authentication
 The first step to using the package is to setup the Authorization Gate (which is the module responsible for issuing, revoking, authorizing, and refreshing tokens etc..). This can be done by defining the configuration and creating the AuthorizationGate object with that configuration
 
 ```php
-use JohnPetersonG17\JwtAuthentication\HashingAlgorithm;
-use JohnPetersonG17\JwtAuthentication\Persistance\Driver;
-use JohnPetersonG17\JwtAuthentication\Config;
-use JohnPetersonG17\JwtAuthentication\AuthorizationGate;
+use JohnPetersonG17\OAuthTokenManagement\HashingAlgorithm;
+use JohnPetersonG17\OAuthTokenManagement\Persistance\Driver;
+use JohnPetersonG17\OAuthTokenManagement\Config;
+use JohnPetersonG17\OAuthTokenManagement\AuthorizationGate;
 
 // Expects an array of key value objects for configuring the authorization gate. Default values are provided if none are passed in via the array.
 $config = new Config(
@@ -88,8 +88,8 @@ There are many options available for configuring your authorization gate. The li
 | `key` | The key used when hashing the token during token creation | string | `secret` |
 | `access_token_expiration` | The amount of time in seconds that access tokens should be set to expire | int | 3600 |
 | `refresh_token_expiration` | The amount of time in seconds that refresh tokens should be set to expire | int | 86400 |
-| `hashing_algorithm` | The hashing algorithm to use when creating a new token | \JohnPetersonG17\JwtAuthentication\HashingAlgorithm | HashingAlgorithm::HS256 |
-| `persistance_driver` | The persistance driver to use when storing the tokens | \JohnPetersonG17\JwtAuthentication\Persistance\Driver | Driver::None |
+| `hashing_algorithm` | The hashing algorithm to use when creating a new token | \JohnPetersonG17\OAuthTokenManagement\HashingAlgorithm | HashingAlgorithm::HS256 |
+| `persistance_driver` | The persistance driver to use when storing the tokens | \JohnPetersonG17\OAuthTokenManagement\Persistance\Driver | Driver::None |
 
 > **Info:** Remember that configuration options are expected to be given as an array of key value pairs using the key listed in the table above
 
@@ -97,7 +97,7 @@ There are many options available for configuring your authorization gate. The li
 
 By default there is no persistance driver used. This is useful for cases where you want to handle how your tokens are persisted and want the package to take care of only generating the tokens.
 
-> **Warning:** Many functions of the authorization gate will throw an `\JohnPetersonG17\JwtAuthentication\Exceptions\PersistanceDriverNotSetException` if no persistance driver is set. Example: You cannot retrieve a token if it is not persisted anywhere. 
+> **Warning:** Many functions of the authorization gate will throw an `\JohnPetersonG17\OAuthTokenManagement\Exceptions\PersistanceDriverNotSetException` if no persistance driver is set. Example: You cannot retrieve a token if it is not persisted anywhere. 
 
 If you want to let the package have the responsability of persisting tokens to a data store then you can set one of the available persistence drivers as shown below.
 
@@ -110,8 +110,8 @@ Under the hood, the predis client is used for connection/communication with redi
 Predis Reference: https://github.com/predis/predis
 
 ```php
-use JohnPetersonG17\JwtAuthentication\Persistance\Driver;
-use JohnPetersonG17\JwtAuthentication\Config;
+use JohnPetersonG17\OAuthTokenManagement\Persistance\Driver;
+use JohnPetersonG17\OAuthTokenManagement\Config;
 
 $config = new Config(
     [
@@ -130,7 +130,7 @@ $config = new Config(
 
 Once you have configured and created an Authentication Gate you can then call all the avaialble function on the gate to create and check tokens.
 
-> **Warning:** Many functions of the authorization gate will throw an `\JohnPetersonG17\JwtAuthentication\Exceptions\PersistanceDriverNotSetException` if no persistance driver is set. Example: You cannot retrieve a token if it is not persisted anywhere.
+> **Warning:** Many functions of the authorization gate will throw an `\JohnPetersonG17\OAuthTokenManagement\Exceptions\PersistanceDriverNotSetException` if no persistance driver is set. Example: You cannot retrieve a token if it is not persisted anywhere.
 
 ### Granting Access to a User (Issuing a Grant)
 
@@ -167,9 +167,9 @@ $accessToken = $grant->accessToken(); // <-- The user must have been issued a gr
 
 try {
     $gate->authorize($accessToken);
-} catch (\JohnPetersonG17\JwtAuthentication\Exceptions\TokenExpiredException) {
+} catch (\JohnPetersonG17\OAuthTokenManagement\Exceptions\TokenExpiredException) {
     // ... Your application code informing the client that the access token has expired
-} catch (\JohnPetersonG17\JwtAuthentication\Exceptions\NotFoundException) {
+} catch (\JohnPetersonG17\OAuthTokenManagement\Exceptions\NotFoundException) {
     // ... Handle the case where the token does not exist or cannot be found
 }
 ```
@@ -203,7 +203,7 @@ This method is more for quality if life in the case that you need to get the exi
 ```php
 $userId = 1234;
 
-$grant = $gate->retrieve($userId); // <-- Throws a \JohnPetersonG17\JwtAuthentication\Exceptions\NotFoundException if a grant does not exist for the user
+$grant = $gate->retrieve($userId); // <-- Throws a \JohnPetersonG17\OAuthTokenManagement\Exceptions\NotFoundException if a grant does not exist for the user
 ```
 
 # Contributing

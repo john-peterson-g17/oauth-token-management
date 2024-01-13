@@ -1,12 +1,12 @@
 <?php
 
-namespace JohnPetersonG17\JwtAuthentication\Tests\Integration;
+namespace JohnPetersonG17\OAuthTokenManagement\Tests\Integration;
 
-use JohnPetersonG17\JwtAuthentication\Persistance\Repositories\RedisGrantRepository;
+use JohnPetersonG17\OAuthTokenManagement\Persistance\Repositories\RedisGrantRepository;
 use Predis\Client;
-use JohnPetersonG17\JwtAuthentication\Grant;
-use JohnPetersonG17\JwtAuthentication\Exceptions\NotFoundException;
-use JohnPetersonG17\JwtAuthentication\Tests\Helpers\LoadsEnvironmentVariables;
+use JohnPetersonG17\OAuthTokenManagement\Grant;
+use JohnPetersonG17\OAuthTokenManagement\Exceptions\NotFoundException;
+use JohnPetersonG17\OAuthTokenManagement\Tests\Helpers\LoadsEnvironmentVariables;
 use PHPUnit\Framework\TestCase;
 
 class RedisGrantRepositoryTest extends TestCase {

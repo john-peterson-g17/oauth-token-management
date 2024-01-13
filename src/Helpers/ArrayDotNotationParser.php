@@ -1,6 +1,6 @@
 <?php
 
-namespace JohnPetersonG17\JwtAuthentication\Helpers;
+namespace JohnPetersonG17\OAuthTokenManagement\Helpers;
 
 class ArrayDotNotationParser {
 

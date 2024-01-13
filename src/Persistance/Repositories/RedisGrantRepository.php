@@ -1,9 +1,9 @@
 <?php
 
-namespace JohnPetersonG17\JwtAuthentication\Persistance\Repositories;
+namespace JohnPetersonG17\OAuthTokenManagement\Persistance\Repositories;
 
-use JohnPetersonG17\JwtAuthentication\Exceptions\NotFoundException;
-use JohnPetersonG17\JwtAuthentication\Grant;
+use JohnPetersonG17\OAuthTokenManagement\Exceptions\NotFoundException;
+use JohnPetersonG17\OAuthTokenManagement\Grant;
 use Predis\Client;
 
 class RedisGrantRepository implements GrantRepository {

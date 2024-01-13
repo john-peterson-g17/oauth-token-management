@@ -1,12 +1,12 @@
 <?php
 
-namespace JohnPetersonG17\JwtAuthentication\Tests\Integration;
+namespace JohnPetersonG17\OAuthTokenManagement\Tests\Integration;
 
-use JohnPetersonG17\JwtAuthentication\Codecs\FirebaseJWTCodec;
-use JohnPetersonG17\JwtAuthentication\Token\TokenPurpose;
-use JohnPetersonG17\JwtAuthentication\Token\Token;
-use JohnPetersonG17\JwtAuthentication\Exceptions\TokenExpiredException;
-use JohnPetersonG17\JwtAuthentication\HashingAlgorithm;
+use JohnPetersonG17\OAuthTokenManagement\Codecs\FirebaseJWTCodec;
+use JohnPetersonG17\OAuthTokenManagement\Token\TokenPurpose;
+use JohnPetersonG17\OAuthTokenManagement\Token\Token;
+use JohnPetersonG17\OAuthTokenManagement\Exceptions\TokenExpiredException;
+use JohnPetersonG17\OAuthTokenManagement\HashingAlgorithm;
 use PHPUnit\Framework\TestCase;
 use DateTime;
 

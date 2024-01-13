@@ -1,10 +1,10 @@
 <?php
 
-namespace JohnPetersonG17\JwtAuthentication\Tests\Unit;
+namespace JohnPetersonG17\OAuthTokenManagement\Tests\Unit;
 
-use JohnPetersonG17\JwtAuthentication\Config;
-use JohnPetersonG17\JwtAuthentication\HashingAlgorithm;
-use JohnPetersonG17\JwtAuthentication\Persistance\Driver;
+use JohnPetersonG17\OAuthTokenManagement\Config;
+use JohnPetersonG17\OAuthTokenManagement\HashingAlgorithm;
+use JohnPetersonG17\OAuthTokenManagement\Persistance\Driver;
 use PHPUnit\Framework\TestCase;
 
 class ConfigTest extends TestCase {

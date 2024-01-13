@@ -1,6 +1,6 @@
 <?php
 
-namespace JohnPetersonG17\JwtAuthentication;
+namespace JohnPetersonG17\OAuthTokenManagement;
 
 enum HashingAlgorithm: string {
     case HS256 ='HS256';

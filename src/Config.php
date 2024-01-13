@@ -1,11 +1,11 @@
 <?php
 
-namespace JohnPetersonG17\JwtAuthentication;
+namespace JohnPetersonG17\OAuthTokenManagement;
 
-use JohnPetersonG17\JwtAuthentication\Exceptions\NotFoundException;
-use JohnPetersonG17\JwtAuthentication\HashingAlgorithm;
-use JohnPetersonG17\JwtAuthentication\Helpers\ArrayDotNotationParser;
-use JohnPetersonG17\JwtAuthentication\Persistance\Driver;
+use JohnPetersonG17\OAuthTokenManagement\Exceptions\NotFoundException;
+use JohnPetersonG17\OAuthTokenManagement\HashingAlgorithm;
+use JohnPetersonG17\OAuthTokenManagement\Helpers\ArrayDotNotationParser;
+use JohnPetersonG17\OAuthTokenManagement\Persistance\Driver;
 
 class Config {
 

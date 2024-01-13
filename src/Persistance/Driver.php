@@ -1,8 +1,8 @@
 <?php
 
-namespace JohnPetersonG17\JwtAuthentication\Persistance;
+namespace JohnPetersonG17\OAuthTokenManagement\Persistance;
 
-use JohnPetersonG17\JwtAuthentication\Persistance\Repositories\RedisGrantRepository;
+use JohnPetersonG17\OAuthTokenManagement\Persistance\Repositories\RedisGrantRepository;
 
 enum Driver: string {
     case None = '';

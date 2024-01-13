@@ -1,18 +1,18 @@
 <?php
 
-namespace JohnPetersonG17\JwtAuthentication;
+namespace JohnPetersonG17\OAuthTokenManagement;
 
-use JohnPetersonG17\JwtAuthentication\Codecs\FirebaseJWTCodec;
-use JohnPetersonG17\JwtAuthentication\Grant;
-use JohnPetersonG17\JwtAuthentication\Token\TokenPurpose;
-use JohnPetersonG17\JwtAuthentication\Token\TokenFactory;
-use JohnPetersonG17\JwtAuthentication\Exceptions\TokenExpiredException;
-use JohnPetersonG17\JwtAuthentication\Exceptions\NotFoundException;
-use JohnPetersonG17\JwtAuthentication\Codecs\Codec;
-use JohnPetersonG17\JwtAuthentication\Exceptions\PersistanceDriverNotSetException;
-use JohnPetersonG17\JwtAuthentication\Persistance\Driver;
-use JohnPetersonG17\JwtAuthentication\Persistance\Repositories\GrantRepository;
-use JohnPetersonG17\JwtAuthentication\Persistance\Repositories\RedisGrantRepository;
+use JohnPetersonG17\OAuthTokenManagement\Codecs\FirebaseJWTCodec;
+use JohnPetersonG17\OAuthTokenManagement\Grant;
+use JohnPetersonG17\OAuthTokenManagement\Token\TokenPurpose;
+use JohnPetersonG17\OAuthTokenManagement\Token\TokenFactory;
+use JohnPetersonG17\OAuthTokenManagement\Exceptions\TokenExpiredException;
+use JohnPetersonG17\OAuthTokenManagement\Exceptions\NotFoundException;
+use JohnPetersonG17\OAuthTokenManagement\Codecs\Codec;
+use JohnPetersonG17\OAuthTokenManagement\Exceptions\PersistanceDriverNotSetException;
+use JohnPetersonG17\OAuthTokenManagement\Persistance\Driver;
+use JohnPetersonG17\OAuthTokenManagement\Persistance\Repositories\GrantRepository;
+use JohnPetersonG17\OAuthTokenManagement\Persistance\Repositories\RedisGrantRepository;
 use Predis\Client;
 
 class AuthorizationGate {

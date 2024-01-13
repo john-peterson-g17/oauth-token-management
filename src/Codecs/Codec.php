@@ -1,8 +1,8 @@
 <?php
 
-namespace JohnPetersonG17\JwtAuthentication\Codecs;
+namespace JohnPetersonG17\OAuthTokenManagement\Codecs;
 
-use JohnPetersonG17\JwtAuthentication\Token\Token;
+use JohnPetersonG17\OAuthTokenManagement\Token\Token;
 
 /**
  * A Codec is responsible for encoding and decoding a Token

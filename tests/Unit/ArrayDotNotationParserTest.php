@@ -1,8 +1,8 @@
 <?php
 
-namespace JohnPetersonG17\JwtAuthentication\Tests\Unit;
+namespace JohnPetersonG17\OAuthTokenManagement\Tests\Unit;
 
-use JohnPetersonG17\JwtAuthentication\Helpers\ArrayDotNotationParser;
+use JohnPetersonG17\OAuthTokenManagement\Helpers\ArrayDotNotationParser;
 use PHPUnit\Framework\TestCase;
 
 class ArrayDotNotationParserTest extends TestCase {
