@@ -44,9 +44,7 @@ jobs:
         env:
           REDIS_HOST: 127.0.0.1
           REDIS_PORT: 6379
-        run: |
-          env \
-          ./vendor/bin/phpunit --coverage-cobertura=coverage.cobertura.xml
+        run: ./vendor/bin/phpunit --coverage-cobertura=coverage.cobertura.xml
 
       - name: Code Coverage Summary Report
         uses: irongut/CodeCoverageSummary@v1.3.0
