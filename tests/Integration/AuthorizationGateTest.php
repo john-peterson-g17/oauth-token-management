@@ -216,4 +216,44 @@ class AuthorizationGateTest extends TestCase {
         $this->expectException(TokenExpiredException::class);
         $this->gate->refresh($grant->refreshToken());
     }
+
+    /**
+     * @test
+     */
+    public function it_throws_an_exception_when_attempting_to_refresh_an_access_token_for_a_user_that_does_not_have_a_grant()
+    {
+        $config = new Config([
+            'persistance_driver' => Driver::Redis,
+            'redis' => [
+                'parameters' => [
+                    'host' => $this->host,
+                    'port' => $this->port,
+                ]
+            ],
+        ]);
+        $this->gate->setConfig($config);
+        $grant = $this->gate->grant(1); // Create a grant as a part of setup
+        $this->gate->revoke(1); // Ensure that there is not a grant for user ID 1
+        // Do not issue a grant for a user ID of 1
+
+        $this->expectException(NotFoundException::class);
+        $this->gate->refresh($grant->refreshToken());
+    }
+
+    /**
+     * @test
+     */
+    public function it_throws_an_exception_when_attempting_to_authorize_and_the_access_token_is_expired()
+    {
+        $config = new Config([
+            'access_token_expiration' => 1,
+        ]);
+        $this->gate->setConfig($config);
+        $grant = $this->gate->grant(1); // Create a grant as a part of setup
+
+        sleep(2); // Sleep for 2 seconds to ensure that the access token is expired
+
+        $this->expectException(TokenExpiredException::class);
+        $this->gate->authorize($grant->accessToken());
+    }
 }

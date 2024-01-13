@@ -159,6 +159,7 @@ class AuthorizationGate {
      */
     public function refresh(string $refreshToken): Grant
     {
+        // Check if a persistance driver is set, we cannot refresh an access token without one
         if ($this->config->get('persistance_driver') === Driver::None) {
             throw new PersistanceDriverNotSetException('Persistance driver is not set. Unable to refresh grant.');
         }
@@ -168,8 +169,6 @@ class AuthorizationGate {
         if ($decodedRefreshToken->isExpired()) {
             throw new TokenExpiredException('Refresh token is expired');
         }
-
-        // TODO: Finish testing this logic
         
         // Check if a grant for the user exists
         // Throws a NotFoundException if not found
@@ -202,17 +201,12 @@ class AuthorizationGate {
         // Check if the access token is expired
         $decodedAccessToken = $this->factory->makeFromRaw($this->codec->decode($accessToken));
         if ($decodedAccessToken->isExpired()) {
-            return false; // TODO: should we throw exceptions instead?
+            throw new TokenExpiredException('Token is expired');
         }
 
         // Check if a grant for the user exists
-        // Throws a NotFoundException if not found
         $userId = $decodedAccessToken->subject();
-        try {
-            $this->repository->find($userId);
-        } catch (NotFoundException $e) {
-            return false;
-        }
+        $this->repository->find($userId); // Throws a NotFoundException if not found
 
         return true;
     }
