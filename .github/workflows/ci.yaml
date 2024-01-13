@@ -6,13 +6,16 @@ on:
   pull_request:
     branches: [ main ]
 
-env:
-  COMPOSER_AUTH: '{"http-basic": {"aptive.repo.repman.io": {"username": "token", "password": "${{ secrets.COMPOSER_AUTH_TOKEN }}"}}}'
-
 jobs:
 
   test:
     runs-on: ubuntu-latest
+    services:
+      redis:
+        image: redis:7.0
+        ports:
+          - 6379:6379
+        options: --entrypoint redis-server
     steps:
       - uses: actions/checkout@v4
 
@@ -38,6 +41,9 @@ jobs:
         run: composer install --prefer-dist --no-progress --no-interaction
 
       - name: Run test suite
+        env:
+          REDIS_HOST: 127.0.0.1
+          REDIS_PORT: 6379
         run: |
           ./vendor/bin/phpunit --coverage-cobertura=coverage.cobertura.xml
 
