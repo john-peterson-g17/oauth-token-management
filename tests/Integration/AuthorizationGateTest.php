@@ -26,8 +26,8 @@ class AuthorizationGateTest extends TestCase {
 
         $this->loadEnvironmentVariables();
 
-        $this->host = $_ENV['REDIS_HOST'];
-        $this->port = $_ENV['REDIS_PORT'];
+        $this->host = getenv('REDIS_HOST');
+        $this->port = getenv('REDIS_PORT');
 
         $this->gate = new AuthorizationGate(new Config());
     }

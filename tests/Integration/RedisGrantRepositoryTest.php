@@ -22,8 +22,8 @@ class RedisGrantRepositoryTest extends TestCase {
 
         $this->loadEnvironmentVariables();
 
-        $host = $_ENV['REDIS_HOST'];
-        $port = $_ENV['REDIS_PORT'];
+        $host = getenv('REDIS_HOST');
+        $port = getenv('REDIS_PORT');
 
         $this->client = new Client([
             'host' => $host,
