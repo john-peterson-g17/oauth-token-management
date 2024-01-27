@@ -153,7 +153,7 @@ class AuthorizationGate {
     /**
      * Refreshes a users Access token
      * @param string $refreshToken The raw string value of the refresh token
-     * @throws TokenNotFoundException if the refresh token is not found
+     * @throws NotFoundException if the refresh token is not found
      * @throws TokenExpiredException if token is expired
      * @return Grant a grant with the new access token
      */
