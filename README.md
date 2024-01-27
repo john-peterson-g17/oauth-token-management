@@ -58,7 +58,7 @@ $config = new Config(
     [
         'issuer' => 'https://myserver.com',
         'key' => 'someSuperSecretKey1234',
-        'hashing_algorithm' => HashingAlgorithm::HS256
+        'hashing_algorithm' => HashingAlgorithm::HS256,
         'access_token_expiration' => 30,
         'refresh_token_expiration' => 60,
         'persistance_driver' => Driver::None
