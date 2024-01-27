@@ -40,7 +40,7 @@ Reference:
 
 To install simply require the package via the composer command:
 ```bash
-composer require @john-peterson-g17/oauth-token-management
+composer require john-peterson-g17/oauth-token-management
 ```
 
 ## Setup
